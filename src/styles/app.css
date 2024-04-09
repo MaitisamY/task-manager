@@ -1,0 +1,306 @@
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle, rgba(231, 235, 247, 0.493) 0%, rgba(134, 140, 153, 0.541) 100%);
+    color: black;
+}
+
+.app {
+    background-color: transparent;
+    width: 100vw;
+    min-height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: calc(10px + 2vmin);
+}
+
+.primary {
+    background-color: #302de6;
+    color: white;
+}
+
+.primary:hover {
+    background-color: rgba(48, 45, 230, 0.9);
+    color: white;
+}
+
+.danger {
+    background-color: #b60b0b;
+    color: white;
+}
+
+.danger:hover {
+    background-color: rgb(182, 11, 11, 0.9);
+    color: white;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 50%;
+    height: auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+header .link {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 20px 20px;
+    transition: all 0.3s ease;
+}
+
+header .link.active {
+    background-color: black;
+    color: #d0cfcf;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        width: fit-content;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+        border-left: 1px solid rgba(0, 0, 0, 0.2);
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 50%;
+    padding: 0;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+@media screen and (max-width: 768px) {
+    .content {
+        width: 100%;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    width: fit-content;
+    height: fit-content;
+    min-width: 31%;
+    max-width: 31%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.5s ease forwards;
+    padding: 0;
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .box {
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;
+    }
+}
+
+.box .header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.box .header h1 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.box .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0;
+    width: 100%;
+    text-align: center;
+    padding: 0 30px 10px 30px;
+}
+
+.box .content h3 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.box .content h3 span {
+    font-size: 16px;
+    font-weight: 500;
+    color: black;
+    margin: 0;
+}
+
+.box .content h3 i {
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 6px;
+}
+
+.box .content p {
+    font-size: 21px;
+}
+
+
+.box .content span {
+    font-size: 13px;
+    color: rgb(173, 13, 13);
+    margin-top: 5px;
+}
+
+.box .content form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    padding: 0;
+}
+
+.box .content label {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.box .content input {
+    width: 100%;
+    font-size: 18px;
+    padding: 5px 5px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+    margin: 0;
+    background-color: transparent;
+}
+
+.box .content textarea {
+    width: 100%;
+    font-size: 18px;
+    padding: 5px 5px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+    margin: 0;
+    background-color: transparent;
+}
+
+.box .content input:focus,
+.box .content input:active,
+.box .content textarea:focus,
+.box .content textarea:active {
+    outline: 1px solid black;
+}
+
+.box .content button {
+    width: 100%;
+    font-size: 18px;
+    padding: 5px 5px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+    transition: all 0.2s ease;
+}
+
+.box .content button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.box .footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.box .footer h6 {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.box .footer div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.box .footer button {
+    font-size: 14px;
+    padding: 10px 10px 7px 10px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
