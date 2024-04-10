@@ -45,6 +45,7 @@ export const TaskProvider = ({ children }) => {
     }
 
     const updateTask = (id, updatedTask) => {
+
         const updatedTasks = tasks.map(task => {
             if (task.id === id) {
                 return {

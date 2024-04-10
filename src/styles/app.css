@@ -20,6 +20,7 @@ html {
     padding: 0;
     scroll-behavior: smooth;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 body {
@@ -27,8 +28,10 @@ body {
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: radial-gradient(circle, rgba(231, 235, 247, 0.493) 0%, rgba(134, 140, 153, 0.541) 100%);
+    background: radial-gradient(circle, rgba(247, 248, 253, 0.493) 0%, rgba(193, 209, 243, 0.541) 100%);
     color: black;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .app {
@@ -50,7 +53,6 @@ body {
 
 .primary:hover {
     background-color: rgba(48, 45, 230, 0.9);
-    color: white;
 }
 
 .danger {
@@ -60,7 +62,24 @@ body {
 
 .danger:hover {
     background-color: rgb(182, 11, 11, 0.9);
+}
+
+.success {
+    background-color: #0b9f0b;
     color: white;
+}
+
+.success:hover {
+    background-color: rgb(11, 182, 11, 0.9);
+}
+
+.warning {
+    background-color: orange;
+    color: white;
+}
+
+.warning:hover {
+    background-color: rgb(255, 165, 0, 0.9);
 }
 
 header {
@@ -68,7 +87,7 @@ header {
     align-items: center;
     justify-content: center;
     gap: 0;
-    width: 50%;
+    width: 45%;
     height: auto;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -95,11 +114,11 @@ header .link.active {
     }
 }
 
-.content {
+main {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
     width: 50%;
@@ -109,11 +128,28 @@ header .link.active {
 }
 
 @media screen and (max-width: 768px) {
-    .content {
+    main {
         width: 100%;
         align-items: center;
         flex-direction: column;
     }
+}
+
+.task-create-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    width: 97%;
+    height: fit-content;
+    min-width: 90%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.5s ease forwards;
+    padding: 0;
+    margin: 0;
 }
 
 .box {
@@ -140,8 +176,13 @@ header .link.active {
         min-width: 90%;
         max-width: 90%;
     }
+    .task-create-box {
+        width: 90%;
+        min-width: 90%;
+    }
 }
 
+.task-create-box .header,
 .box .header {
     position: relative;
     display: flex;
@@ -154,9 +195,83 @@ header .link.active {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+.task-create-box .header h1,
 .box .header h1 {
     font-size: 30px;
     font-weight: bold;
+}
+
+.task-create-box .content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px 30px 20px 30px;
+    margin: 0;
+}
+
+.task-create-box .content form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+}
+
+.task-create-box .content form .input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    padding: 0;
+}
+
+.task-create-box .content form input {
+    width: 100%;
+    font-size: 18px;
+    padding: 5px 5px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+    margin: 0;
+    background-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.task-create-box .content form textarea {
+    width: 100%;
+    font-size: 18px;
+    padding: 5px 5px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+    margin: 0;
+    background-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.task-create-box .content form button {
+    width: auto;
+    font-size: 18px;
+    margin: 47px 0 0 0;
+    padding: 7px 7px 3px 7px;
+    border-radius: 10px;
+    border: none;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
 }
 
 .box .content {
@@ -168,9 +283,11 @@ header .link.active {
     gap: 0;
     width: 100%;
     text-align: center;
-    padding: 0 30px 10px 30px;
+    padding: 20px 30px 20px 30px;
+    margin: 0;
 }
 
+.task-create-box .content h3,
 .box .content h3 {
     display: flex;
     align-items: center;
@@ -181,6 +298,7 @@ header .link.active {
     margin: 0;
 }
 
+.task-create-box .content h3 span,
 .box .content h3 span {
     font-size: 16px;
     font-weight: 500;
@@ -188,6 +306,7 @@ header .link.active {
     margin: 0;
 }
 
+.task-create-box .content h3 i,
 .box .content h3 i {
     font-size: 20px;
     cursor: pointer;
@@ -195,11 +314,12 @@ header .link.active {
     margin-top: 6px;
 }
 
+.task-create-box .content p,
 .box .content p {
     font-size: 21px;
 }
 
-
+.task-create-box .content span,
 .box .content span {
     font-size: 13px;
     color: rgb(173, 13, 13);
@@ -216,10 +336,22 @@ header .link.active {
     padding: 0;
 }
 
+.box .content form .input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    padding: 0;
+}
+
+.task-create-box .content label,
 .box .content label {
     font-size: 18px;
     font-weight: 500;
     margin-top: 20px;
+    margin-bottom: 5px;
 }
 
 .box .content input {
@@ -232,6 +364,7 @@ header .link.active {
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
     margin: 0;
     background-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .box .content textarea {
@@ -244,8 +377,21 @@ header .link.active {
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
     margin: 0;
     background-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.task-create-box .content input::placeholder,
+.task-create-box .content textarea::placeholder,
+.box .content input::placeholder,
+.box .content textarea::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.task-create-box .content input:focus,
+.task-create-box .content input:active,
+.task-create-box .content textarea:focus,
+.task-create-box .content textarea:active,
 .box .content input:focus,
 .box .content input:active,
 .box .content textarea:focus,
@@ -267,10 +413,12 @@ header .link.active {
     transition: all 0.2s ease;
 }
 
+.task-create-box .content button:hover,
 .box .content button:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.task-create-box .footer,
 .box .footer {
     position: relative;
     display: flex;
@@ -282,11 +430,13 @@ header .link.active {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+.task-create-box .footer h6,
 .box .footer h6 {
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 11px;
+    font-weight: 700;
 }
 
+.task-create-box .footer div,
 .box .footer div {
     display: flex;
     align-items: center;
@@ -294,13 +444,26 @@ header .link.active {
     gap: 10px;
 }
 
+.task-create-box .footer button,
 .box .footer button {
     font-size: 14px;
     padding: 10px 10px 7px 10px;
     border-radius: 10px;
     border: none;
-    outline: 1px solid rgba(0, 0, 0, 0.2);
+    outline: none;
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+@media screen and (max-width: 768px) {
+    .task-create-box .content form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 0;
+    }
 }

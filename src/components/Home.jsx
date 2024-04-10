@@ -1,7 +1,4 @@
-import { useState } from 'react'
 import { useTask } from '../hooks/TaskProvider'
-import { FaPen, FaTrash } from 'react-icons/fa'
-import { LiaToggleOffSolid, LiaToggleOnSolid } from 'react-icons/lia'
 
 import { toast } from 'react-toastify'
 import { confirmAlert } from 'react-confirm-alert'
@@ -10,22 +7,31 @@ import 'react-toastify/dist/ReactToastify.css'
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
 import CreateTask from './CreateTask'
+import EditTask from './EditTask'
 
 function Home() {
 
-    const { tasks, markTask, deleteTask } = useTask()
+    const { tasks, markTask, deleteTask, updateTask } = useTask()
 
-    const today = new Date().toISOString().slice(0, 10);
-    const filteredTasks = tasks.filter(task => task.dueDate >= today);
+    const todayDateString = new Date().toDateString();
+    const filteredTasks = tasks.filter((task) => new Date(task.dueDate) >= new Date(todayDateString));
 
     // localStorage.removeItem('tasks')
 
     const handleMarkTask = (id) => {
-        markTask(id)
-    }
 
-    const handleEditTask = (id) => {
-        
+        const task = tasks.find(task => task.id === id)
+        markTask(id)
+
+        toast.success(`Marked as ${task.status === 'pending' ? 'completed' : 'pending'}`, {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        })
     }
 
     const handleDeleteTask = (id, taskName) => {
@@ -41,7 +47,7 @@ function Home() {
                         toast.warn(`Deleting task: ${taskName}`, {
                             position: "bottom-right",
                             autoClose: 3000,
-                            hideProgressBar: false,
+                            hideProgressBar: true,
                             closeOnClick: true,
                             pauseOnHover: true,
                             draggable: true,
@@ -59,12 +65,16 @@ function Home() {
             ]
         });
     };
+
+    const handleUpdateTask = (id, task, dueDate) => {
+        updateTask(id, task, dueDate)
+    }
     
         
-    if (!tasks || tasks.length === 0) {
+    if (!filteredTasks || filteredTasks.length === 0) {
         return (
             <>
-                <div className="box">
+                <div className="task-create-box">
                     <div className="header">
                         <h1>Welcome</h1>
                     </div>
@@ -79,7 +89,7 @@ function Home() {
 
     return (
         <>
-            <div className="box">
+            <div className="task-create-box">
                 <div className="header">
                     <h1>Add Task</h1>
                 </div>
@@ -90,27 +100,13 @@ function Home() {
             {
                 filteredTasks.map(task => (
                     <div className="box" key={task.id}>
-                        <div className="content">
-                            <h3>
-                                <i onClick={() => handleMarkTask(task.id)}>
-                                    {task.status === 'completed' ? <LiaToggleOnSolid /> : <LiaToggleOffSolid />}
-                                </i>
-                                <span 
-                                    style={{ textDecoration: task.status === 'completed' ? 'line-through' : 'none' }}
-                                >
-                                    {task.task}
-                                </span>
-                            </h3>
-                        </div>
-                        <div className="footer">
-                            <div>
-                                <h6>Due Date: {new Date(task.dueDate).toLocaleDateString()}</h6>
-                            </div>
-                            <div>
-                                <button className="primary"><FaPen /></button>
-                                <button className="danger" onClick={() => handleDeleteTask(task.id, task.task)}><FaTrash /></button>
-                            </div>
-                        </div>
+                        <EditTask 
+                            task={task} 
+                            tasks={tasks}
+                            onMarkTask={handleMarkTask}
+                            onDeleteTask={handleDeleteTask} 
+                            onUpdateTask={handleUpdateTask}
+                        />
                     </div>
                 ))
             }

@@ -13,16 +13,16 @@ import Trash from './components/Trash'
 function App() {
     return (
         <div className="app">
-            <ToastContainer className={'Toastify__toast--error'}  />
+            <ToastContainer style={{ fontSize: '14px' }}  />
             <Router>
                 <TaskProvider>
                     <Header />
-                        <div className="content">
+                        <main>
                             <Routes>
                                 <Route path="/" element={<Home />} />
                                 <Route path="/trash" element={<Trash />} />
                             </Routes>
-                        </div>
+                        </main>
                 </TaskProvider>
             </Router>
         </div>
