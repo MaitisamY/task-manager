@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTask } from '../hooks/TaskProvider';
 import { v4 as uuidv4 } from 'uuid';
 import { FaPlus } from 'react-icons/fa';
@@ -96,6 +96,24 @@ const CreateTask = () => {
         })
         
     };
+
+    useEffect(() => {
+        if (task.length >= 6 && task.length < 125) {
+            setErrors({
+                ...errors,
+                task: '',
+            });
+            return;
+        }
+
+        if (new Date(dueDate) > new Date(new Date().setHours(0, 0, 0, 0))) {
+            setErrors({
+                ...errors,
+                dueDate: '',
+            });
+            return;
+        }
+    }, [task, dueDate]);
 
     return (
         <form onSubmit={handleCreateTask}>
