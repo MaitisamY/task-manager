@@ -72,14 +72,14 @@ const CreateTask = () => {
             id: uuidv4(),
             task: task,
             dueDate: formattedDueDate,
-            status: 'pending', // Assuming you want to set initial status as 'pending'
+            status: 'pending', // set initial status as 'pending'
         };
 
         addTask(newTask);
 
         // Clear form fields after adding the task
         setTask('');
-        setDueDate('');
+        setDueDate(formatDateToInput(new Date().toDateString()));
         setErrors({
             task: '',
             dueDate: '',
