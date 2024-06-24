@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useTask } from '../hooks/TaskProvider'
 
 import { toast } from 'react-toastify'
@@ -69,7 +70,11 @@ function Home() {
     const handleUpdateTask = (id, task, dueDate) => {
         updateTask(id, task, dueDate)
     }
-    
+
+    const [option, setOption] = useState(0)
+    const handleOptionChange = (option) => {
+        setOption(option)
+    }
         
     if (!filteredTasks || filteredTasks.length === 0) {
         return (
@@ -79,7 +84,26 @@ function Home() {
                         <h1>Welcome</h1>
                     </div>
                     <div className="content">
-                        <p>Start adding tasks</p>
+                        <div className="selection">
+                            {
+                                option === 1 ? (
+                                    <>
+                                        <a className="selector active" onClick={() => handleOptionChange(1)}>Start adding a tasks</a>
+                                        <a className="selector" onClick={() => handleOptionChange(2)}>Start adding a thread</a>
+                                    </>
+                                ) : option === 2 ? (
+                                    <>
+                                        <a className="selector" onClick={() => handleOptionChange(1)}>Start adding a tasks</a>
+                                        <a className="selector active" onClick={() => handleOptionChange(2)}>Start adding a thread</a>
+                                    </>
+                                ) : (
+                                    <>
+                                        <a className="selector" onClick={() => handleOptionChange(1)}>Start adding a tasks</a>
+                                        <a className="selector" onClick={() => handleOptionChange(2)}>Start adding a thread</a>
+                                    </>
+                                )
+                            }
+                        </div>
                         <CreateTask />
                     </div>
                 </div>
@@ -91,9 +115,29 @@ function Home() {
         <>
             <div className="task-create-box">
                 <div className="header">
-                    <h1>Add Task</h1>
+                    <h1>To Dos</h1>
                 </div>
                 <div className="content">
+                    <div className="selection">
+                        {
+                            option === 1 ? (
+                                <>
+                                    <a className="selector active" onClick={() => handleOptionChange(1)}>Start adding a tasks</a>
+                                    <a className="selector" onClick={() => handleOptionChange(2)}>Start adding a thread</a>
+                                </>
+                            ) : option === 2 ? (
+                                <>
+                                    <a className="selector" onClick={() => handleOptionChange(1)}>Start adding a tasks</a>
+                                    <a className="selector active" onClick={() => handleOptionChange(2)}>Start adding a thread</a>
+                                </>
+                            ) : (
+                                <>
+                                    <a className="selector" onClick={() => handleOptionChange(1)}>Start adding a tasks</a>
+                                    <a className="selector" onClick={() => handleOptionChange(2)}>Start adding a thread</a>
+                                </>
+                            )
+                        }
+                    </div>
                     <CreateTask />
                 </div>
             </div>

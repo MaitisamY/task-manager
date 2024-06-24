@@ -214,6 +214,44 @@ main {
     margin: 0;
 }
 
+.task-create-box .content .selection {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.task-create-box .content .selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    font-size: 16px;
+    font-weight: 500;
+    width: fit-content;
+    color: #fff;
+    background-color: #2d29ee;
+    border-radius: 10px;
+    margin: 0;
+    padding: 10px 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.task-create-box .content .selector:hover { 
+    background-color: #3e3eeb;
+    box-shadow: 0 0 0 4px #3e3eeb67;
+}
+
+.task-create-box .content .selector.active {
+    background-color: #3e3eeb;
+    box-shadow: 0 0 0 4px #3e3eeb52, 0 0 0 8px #3e3eeb27;
+}
+
 .task-create-box .content form {
     display: flex;
     flex-direction: row;
