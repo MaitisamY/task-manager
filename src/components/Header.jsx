@@ -13,8 +13,8 @@ const Header = () => {
                 to="/"
             >To Dos</Link>
             <Link 
-                className={location.pathname === "/pending" ? "link active" : "link"} 
-                to="/pending"
+                className={location.pathname === "/in-progress" ? "link active" : "link"} 
+                to="/in-progress"
             >In Progress</Link>
             <Link 
                 className={location.pathname === "/completed" ? "link active" : "link"} 

@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
-import { useTask } from '../hooks/TaskProvider'
-import { v4 as uuidv4 } from 'uuid'
-import { FaPlus } from 'react-icons/fa'
-import { toast } from 'react-toastify'
-import { formatDateToInput } from '../util/DateFormats'
+import { useState, useEffect } from 'react';
+import { useTask } from '../hooks/TaskProvider';
+import { v4 as uuidv4 } from 'uuid';
+import { FaPlus } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { formatDateToInput } from '../util/DateFormats';
 
-const CreateTask = () => {
+const CreateTask = ({ status }) => {
     const { addTask } = useTask();
     const [task, setTask] = useState('');
     const [dueDate, setDueDate] = useState(formatDateToInput(new Date().toDateString()));
@@ -13,11 +13,6 @@ const CreateTask = () => {
 
     const handleCreateTask = (e) => {
         e.preventDefault();
-
-        if (!task && !dueDate) {
-            setErrors({ task: 'Task is required', dueDate: 'Due date is required' });
-            return;
-        }
 
         if (!task) {
             setErrors({ ...errors, task: 'Task is required' });
@@ -43,7 +38,7 @@ const CreateTask = () => {
             id: uuidv4(),
             task: task,
             dueDate: formattedDueDate,
-            status: 'to-do',
+            status: status || 'to-do',
             timestamp: new Date().toISOString()
         };
 
@@ -110,4 +105,4 @@ const CreateTask = () => {
     );
 };
 
-export default CreateTask
+export default CreateTask;

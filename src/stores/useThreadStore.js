@@ -14,7 +14,7 @@ const useThreadStore = create((set, get) => ({
             id: uuidv4(),
             threadName,
             timestamp: new Date().toISOString(),
-            status: 'to-do', // default status
+            status: 'to-do',
             threadItems: [],
         };
         const threads = [...get().threads, newThread];
@@ -86,6 +86,17 @@ const useThreadStore = create((set, get) => ({
         localStorage.setItem('threads', JSON.stringify(threads));
     },
 
+    moveThreadToInProgress: (threadId) => {
+        const threads = get().threads.map(thread => {
+            if (thread.id === threadId) {
+                return { ...thread, status: 'in-progress' };
+            }
+            return thread;
+        });
+        set({ threads });
+        localStorage.setItem('threads', JSON.stringify(threads));
+    },
+
     moveThreadToTodo: (threadId) => {
         const threads = get().threads.map(thread => {
             if (thread.id === threadId) {
@@ -138,4 +149,4 @@ const useThreadStore = create((set, get) => ({
     }
 }));
 
-export default useThreadStore
+export default useThreadStore;

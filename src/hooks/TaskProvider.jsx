@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext, createContext } from 'react'
-import useThreadStore from '../stores/useThreadStore'
+import { useState, useEffect, useContext, createContext } from 'react';
+import useThreadStore from '../stores/useThreadStore.js';
 
 const TaskContext = createContext();
 
@@ -17,6 +17,7 @@ export const TaskProvider = ({ children }) => {
         addChildItem,
         removeItem,
         moveThreadToCompleted,
+        moveThreadToInProgress,
         moveThreadToTodo,
         markThreadItemAsDone,
         unmarkThreadItemAsDone,
@@ -40,6 +41,17 @@ export const TaskProvider = ({ children }) => {
         const updatedTasks = tasks.map(task => {
             if (task.id === id) {
                 return { ...task, status: 'completed' };
+            }
+            return task;
+        });
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    };
+
+    const moveTaskToInProgress = (id) => {
+        const updatedTasks = tasks.map(task => {
+            if (task.id === id) {
+                return { ...task, status: 'in-progress' };
             }
             return task;
         });
@@ -83,6 +95,7 @@ export const TaskProvider = ({ children }) => {
             tasks,
             addTask,
             moveTaskToCompleted,
+            moveTaskToInProgress,
             moveTaskToTodo,
             deleteTask,
             updateTask,
@@ -92,6 +105,7 @@ export const TaskProvider = ({ children }) => {
             addChildItem,
             removeItem,
             moveThreadToCompleted,
+            moveThreadToInProgress,
             moveThreadToTodo,
             markThreadItemAsDone,
             unmarkThreadItemAsDone,

@@ -9,9 +9,9 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 
 import Header from './components/Header'
 import Home from './pages/Home'
-import Pending from './pages/Pending'
+import InProgress from './pages/InProgress'
 import Completed from './pages/Completed'
-import Trash from './pages/Trash'
+import Expired from './pages/Expired'
 import About from './pages/About'
 
 const App = () => {
@@ -24,9 +24,9 @@ const App = () => {
                         <main>
                             <Routes>
                                 <Route path="/" element={<Home />} />
-                                <Route path="/pending" element={<Pending />} />
+                                <Route path="/in-progress" element={<InProgress />} />
                                 <Route path="/completed" element={<Completed />} />
-                                <Route path="/expired" element={<Trash />} />
+                                <Route path="/expired" element={<Expired />} />
                                 <Route path="/about" element={<About />} />
                             </Routes>
                         </main>

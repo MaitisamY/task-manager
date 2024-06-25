@@ -183,7 +183,13 @@ const EditTask = ({ task, onMarkTask, onDeleteTask, onUpdateTask }) => {
                         </div>
                         <div className="footer">
                             <div>
-                                <h6>Due Date: {formatDateToDisplay(task.dueDate)}</h6>
+                                <h6>
+                                    {
+                                        task.dueDate && (
+                                            `Due Date: ${formatDateToDisplay(task.dueDate)}`
+                                        )
+                                    }
+                                </h6>
                             </div>
                             <div>
                                 <button

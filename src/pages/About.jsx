@@ -52,6 +52,9 @@ const About = () => {
                             I leveraged localstorage to keep track of tasks. And to apply CRUD operations smoothly across the application.
                         </li>
                         <li>
+                            I used Zustand for state management. I love using it, maybe because it's light weight and easy to use.
+                        </li>
+                        <li>
                             Web workers are used to improve performance and reduce latency. 
                             Service workers are used to make sure that the application installs and runs smoothly offline too.
                         </li>

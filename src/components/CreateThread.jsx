@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-const CreateThread = () => {
-    const { addThread, addThreadItem } = useTask();
+const CreateThread = ({ status }) => {
+    const { addThread, addThreadItem, addChildItem } = useTask();
 
     const [threadName, setThreadName] = useState('');
     const [threadItem, setThreadItem] = useState('');
@@ -34,10 +34,9 @@ const CreateThread = () => {
         }
 
         const newThreadId = uuidv4();
-        addThread({ id: newThreadId, threadName, timestamp: new Date().toISOString(), status: 'to-do' });
+        addThread({ id: newThreadId, threadName, timestamp: new Date().toISOString(), status: status });
         addThreadItem(newThreadId, threadItem);
 
-        // Clear form fields after adding the thread
         setThreadName('');
         setThreadItem('');
         setErrors({
@@ -54,6 +53,58 @@ const CreateThread = () => {
             draggable: true,
             progress: undefined,
         });
+    };
+
+    const handleAddChildItem = (e) => {
+        e.preventDefault();
+
+        if (!threadName) {
+            setErrors({
+                ...errors,
+                threadName: 'Thread name is required to add a child item',
+            });
+            return;
+        }
+
+        if (!threadItem) {
+            setErrors({
+                ...errors,
+                threadItem: 'Thread item is required to add a child item',
+            });
+            return;
+        }
+
+        // Assuming the new thread is already created, find its ID
+        const existingThread = threads.find(thread => thread.threadName === threadName);
+        if (existingThread) {
+            addChildItem(existingThread.id, existingThread.threadItems[0].id, threadItem);
+
+            setThreadItem('');
+            setErrors({
+                threadName: '',
+                threadItem: '',
+            });
+
+            toast.success('Child item added successfully!', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+            toast.error('Thread not found. Please create the thread first.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
     };
 
     return (
@@ -80,7 +131,9 @@ const CreateThread = () => {
                 />
                 {errors.threadItem && <span>{errors.threadItem}</span>}
             </div>
-            <a className="navigator" onClick={() => addThreadItem(threadName, threadItem)}>Add Item</a>
+            <a className="navigator" onClick={handleAddChildItem}>
+                <FaPlus /> Add Child Item
+            </a>
             <button className="common-button" type="submit" style={{ width: '100%' }}>
                 <FaPlus /> Add Thread
             </button>

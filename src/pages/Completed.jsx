@@ -1,12 +1,22 @@
-import { useTask } from '../hooks/TaskProvider'
-import EditTask from '../components/EditTask'
-import EditThread from '../components/EditThread'
-import CreateTask from '../components/CreateTask'
-import CreateThread from '../components/CreateThread'
-import windowWidthDetection from '../util/WindowWidthDetection'
+import { useTask } from '../hooks/TaskProvider';
+import EditTask from '../components/EditTask';
+import EditThread from '../components/EditThread';
+import CreateTask from '../components/CreateTask';
+import CreateThread from '../components/CreateThread';
+import windowWidthDetection from '../util/WindowWidthDetection';
+import { BsArrows } from 'react-icons/bs';
 
 const Completed = () => {
-    const { tasks, threads, moveTaskToTodo, deleteTask, updateTask, moveThreadToTodo, removeCompletedThread, updateThread } = useTask();
+    const { 
+        tasks, 
+        threads, 
+        moveTaskToTodo, 
+        deleteTask, 
+        updateTask, 
+        moveThreadToTodo, 
+        removeCompletedThread, 
+        updateThread 
+    } = useTask();
 
     const completedTasks = tasks.filter(task => task.status === 'completed');
     const completedThreads = threads.filter(thread => thread.status === 'completed');
@@ -21,15 +31,21 @@ const Completed = () => {
     : '100%';
 
     return (
-        <div>
-            <h1>Completed</h1>
+        <>
+            <h1 className="page-heading">
+                Completed
+            </h1>
+            <span className="swipe-text">
+                Swipe to see more options
+                <BsArrows size={40} style={{ animation: 'swipeRightAndLeft 5s ease-in-out infinite' }} />
+            </span>
             <div className="selection">
                 <div className="task-container height-controller" style={{ width: taskContainerWidth }}>
                     <div className="header">
                         <h2>Start adding a task</h2>
                     </div>
                     <div className="content">
-                        <CreateTask />
+                        <CreateTask status="completed" />
                     </div>
                 </div>
                 <div className="task-container height-controller" style={{ width: taskContainerWidth }}>
@@ -37,7 +53,7 @@ const Completed = () => {
                         <h2>Start adding a thread</h2>
                     </div>
                     <div className="content">
-                        <CreateThread />
+                        <CreateThread status="completed" />
                     </div>
                 </div>
             </div>
@@ -51,7 +67,8 @@ const Completed = () => {
                     </div>
                 </div>
             ) : (
-                combinedItems.map(item => (
+                <div className="tasks-threads-holder">
+                {combinedItems.map(item => (
                     <div className="box" key={item.id}>
                         {item.task ? (
                             <EditTask
@@ -69,10 +86,11 @@ const Completed = () => {
                             />
                         )}
                     </div>
-                ))
+                ))}
+                </div>
             )}
-        </div>
+        </>
     );
 };
 
-export default Completed
+export default Completed;

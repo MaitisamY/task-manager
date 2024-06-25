@@ -7,30 +7,27 @@ import windowWidthDetection from '../util/WindowWidthDetection';
 import CreateTask from '../components/CreateTask';
 import CreateThread from '../components/CreateThread';
 import EditTask from '../components/EditTask';
-import EditThread from '../components/EditThread'; 
+import EditThread from '../components/EditThread';
 
 const Home = () => {
     const {
         tasks,
         moveTaskToCompleted,
-        moveTaskToTodo,
         deleteTask,
         updateTask,
         threads,
         moveThreadToCompleted,
-        moveThreadToTodo
+        removeCompletedThread,
+        updateThread
     } = useTask();
 
     const todayDateString = new Date().toDateString();
     const filteredTasks = tasks.filter(task => task.status === 'to-do' && (!task.dueDate || new Date(task.dueDate) >= new Date(todayDateString)));
     const filteredThreads = threads.filter(thread => thread.status === 'to-do');
 
-    // Combine tasks and threads
     const combinedItems = [...filteredTasks, ...filteredThreads].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
     const windowWidth = windowWidthDetection();
-
-    // Calculating the width for the task containers based on the window width
     const taskContainerWidth = windowWidth > 768 ? '48.5%' :
         windowWidth > 900 ? '55%' :
         windowWidth > 1050 ? '60%' :
@@ -39,19 +36,6 @@ const Home = () => {
     const handleMoveToCompleted = (id) => {
         moveTaskToCompleted(id);
         toast.success('Task moved to completed!', {
-            position: "bottom-right",
-            autoClose: 3000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-        });
-    };
-
-    const handleMoveToTodo = (id) => {
-        moveTaskToTodo(id);
-        toast.success('Task moved to To Dos!', {
             position: "bottom-right",
             autoClose: 3000,
             hideProgressBar: true,
@@ -151,7 +135,7 @@ const Home = () => {
                         <h2>Start adding a task</h2>
                     </div>
                     <div className="content">
-                        <CreateTask />
+                        <CreateTask status="to-do" />
                     </div>
                 </div>
                 <div className="task-container height-controller" style={{ width: taskContainerWidth }}>
@@ -159,35 +143,37 @@ const Home = () => {
                         <h2>Start adding a thread</h2>
                     </div>
                     <div className="content">
-                        <CreateThread />
+                        <CreateThread status="to-do" />
                     </div>
                 </div>
             </div>
-            {
-                combinedItems.map(item => (
-                    <div className="box" key={item.id}>
-                        {
-                            item.task ? (
-                                <EditTask
-                                    task={item}
-                                    onMarkTask={item.status === 'completed' ? handleMoveToTodo : handleMoveToCompleted}
-                                    onDeleteTask={handleDeleteTask}
-                                    onUpdateTask={handleUpdateTask}
-                                />
-                            ) : (
-                                <EditThread
-                                    thread={item}
-                                    onMarkThread={item.status === 'completed' ? moveThreadToTodo : moveThreadToCompleted}
-                                    onDeleteThread={removeCompletedThread}
-                                    onUpdateThread={handleUpdateTask} // Implement this function for threads
-                                />
-                            )
-                        }
-                    </div>
-                ))
-            }
+            <div className="tasks-threads-holder">
+                {
+                    combinedItems.map(item => (
+                        <div className="box" key={item.id}>
+                            {
+                                item.task ? (
+                                    <EditTask
+                                        task={item}
+                                        onMarkTask={item.status === 'completed' ? moveTaskToTodo : handleMoveToCompleted}
+                                        onDeleteTask={handleDeleteTask}
+                                        onUpdateTask={handleUpdateTask}
+                                    />
+                                ) : (
+                                    <EditThread
+                                        thread={item}
+                                        onMarkThread={item.status === 'completed' ? moveThreadToTodo : moveThreadToCompleted}
+                                        onDeleteThread={removeCompletedThread}
+                                        onUpdateThread={updateThread}
+                                    />
+                                )
+                            }
+                        </div>
+                    ))
+                }
+            </div>
         </>
     );
 };
 
-export default Home
+export default Home;
