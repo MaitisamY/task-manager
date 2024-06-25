@@ -26,7 +26,7 @@ const App = () => {
                                 <Route path="/" element={<Home />} />
                                 <Route path="/pending" element={<Pending />} />
                                 <Route path="/completed" element={<Completed />} />
-                                <Route path="/trash" element={<Trash />} />
+                                <Route path="/expired" element={<Trash />} />
                                 <Route path="/about" element={<About />} />
                             </Routes>
                         </main>

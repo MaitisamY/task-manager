@@ -1,89 +1,57 @@
-import { useState, useEffect } from 'react';
-import { useTask } from '../hooks/TaskProvider';
-import { v4 as uuidv4 } from 'uuid';
-import { FaPlus } from 'react-icons/fa';
+import { useState, useEffect } from 'react'
+import { useTask } from '../hooks/TaskProvider'
+import { v4 as uuidv4 } from 'uuid'
+import { FaPlus } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { formatDateToInput } from '../util/DateFormats'
 
-import 'react-toastify/dist/ReactToastify.css'
-
 const CreateTask = () => {
-
     const { addTask } = useTask();
-
     const [task, setTask] = useState('');
     const [dueDate, setDueDate] = useState(formatDateToInput(new Date().toDateString()));
-    const [errors, setErrors] = useState({
-        task: '',
-        dueDate: '',
-    });
+    const [errors, setErrors] = useState({ task: '', dueDate: '' });
 
     const handleCreateTask = (e) => {
         e.preventDefault();
 
         if (!task && !dueDate) {
-            setErrors({
-                ...errors,
-                task: 'Task is required',
-                dueDate: 'Due date is required',
-            });
+            setErrors({ task: 'Task is required', dueDate: 'Due date is required' });
             return;
         }
 
         if (!task) {
-            setErrors({
-                ...errors,
-                task: 'Task is required',
-            });
+            setErrors({ ...errors, task: 'Task is required' });
             return;
         }
 
         if (task.length < 6 || task.length > 125) {
-            setErrors({
-                ...errors,
-                task: 'Should be between 6 and 125 characters',
-            });
-            return;
-        }
-
-        if (!dueDate) {
-            setErrors({
-                ...errors,
-                dueDate: 'Due date is required',
-            });
+            setErrors({ ...errors, task: 'Should be between 6 and 125 characters' });
             return;
         }
 
         if (dueDate) {
             const formattedDate = new Date(dueDate).toLocaleDateString();
             if (new Date(formattedDate) < new Date(new Date().setHours(0, 0, 0, 0))) {
-                setErrors({
-                    ...errors,
-                    dueDate: 'Due date cannot be in the past',
-                });
+                setErrors({ ...errors, dueDate: 'Due date cannot be in the past' });
                 return;
             }
         }
 
-        const formattedDueDate = new Date(dueDate).toLocaleDateString('en-US', { timeZone: 'Asia/Karachi' });
+        const formattedDueDate = dueDate ? new Date(dueDate).toLocaleDateString('en-US', { timeZone: 'Asia/Karachi' }) : null;
 
-        // Create a new task object
         const newTask = {
             id: uuidv4(),
             task: task,
             dueDate: formattedDueDate,
-            status: 'pending', // set initial status as 'pending'
+            status: 'to-do',
+            timestamp: new Date().toISOString()
         };
 
         addTask(newTask);
 
-        // Clear form fields after adding the task
         setTask('');
         setDueDate(formatDateToInput(new Date().toDateString()));
-        setErrors({
-            task: '',
-            dueDate: '',
-        })
+        setErrors({ task: '', dueDate: '' });
 
         toast.success('Task created successfully!', {
             position: "top-right",
@@ -93,25 +61,16 @@ const CreateTask = () => {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-        })
-        
+        });
     };
 
     useEffect(() => {
         if (task.length >= 6 && task.length < 125) {
-            setErrors({
-                ...errors,
-                task: '',
-            });
-            return;
+            setErrors({ ...errors, task: '' });
         }
 
-        if (new Date(dueDate) > new Date(new Date().setHours(0, 0, 0, 0))) {
-            setErrors({
-                ...errors,
-                dueDate: '',
-            });
-            return;
+        if (dueDate && new Date(dueDate) > new Date(new Date().setHours(0, 0, 0, 0))) {
+            setErrors({ ...errors, dueDate: '' });
         }
     }, [task, dueDate]);
 
@@ -127,7 +86,6 @@ const CreateTask = () => {
                     onChange={(e) => setTask(e.target.value)}
                     rows={2}
                 ></textarea>
-
                 {errors.task && <span>{errors.task}</span>}
             </div>
             <div className="input-group">
@@ -138,12 +96,11 @@ const CreateTask = () => {
                     value={dueDate}
                     onChange={(e) => setDueDate(e.target.value)}
                 />
-
                 {errors.dueDate && <span>{errors.dueDate}</span>}
             </div>
             <p>Setting date in the past will move the task to expired.</p>
-            <button 
-                className="common-button" 
+            <button
+                className="common-button"
                 type="submit"
                 style={{ width: '100%' }}
             >
@@ -153,4 +110,4 @@ const CreateTask = () => {
     );
 };
 
-export default CreateTask;
+export default CreateTask

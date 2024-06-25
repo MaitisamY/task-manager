@@ -1,25 +1,21 @@
 import { useState, useEffect } from 'react'
-
 import { FaPen, FaTrash, FaCheck, FaTimes } from 'react-icons/fa'
 import { LiaToggleOffSolid, LiaToggleOnSolid } from 'react-icons/lia'
 import { toast } from 'react-toastify'
 import { formatDateToInput, formatDateToDisplay } from '../util/DateFormats'
 
-import 'react-toastify/dist/ReactToastify.css'
-
-function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
-
-    const [editingTasks, setEditingTasks] = useState({})
-    const [taskChanges, setTaskChanges] = useState({})
+const EditTask = ({ task, onMarkTask, onDeleteTask, onUpdateTask }) => {
+    const [editingTasks, setEditingTasks] = useState({});
+    const [taskChanges, setTaskChanges] = useState({});
     const [status, setStatus] = useState(null);
     const [dueDate, setDueDate] = useState(null);
-    const [dateError, setDateError] = useState({ id: '', error: ''})
-    const [taskError, setTaskError] = useState({ id: '', error: ''})
+    const [dateError, setDateError] = useState({ id: '', error: '' });
+    const [taskError, setTaskError] = useState({ id: '', error: '' });
 
     const handleDueDateChange = (event) => {
         setDueDate(event.target.value);
     };
-    
+
     const handleTaskChanges = (e, id) => {
         const { value } = e.target;
         setTaskChanges((prevTaskChanges) => ({
@@ -27,48 +23,47 @@ function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
             [id]: value,
         }));
     };
-    
+
     const startEditing = (id) => {
         setEditingTasks((prevEditingTasks) => ({
             ...prevEditingTasks,
             [id]: true,
         }));
-        
+
         setTaskChanges((prevTaskChanges) => ({
             ...prevTaskChanges,
-            [id]: tasks.find((task) => task.id === id)?.task,
+            [id]: task.task,
         }));
 
-        setStatus(tasks.find((task) => task.id === id)?.status);
+        setStatus(task.status);
 
-        const formattedDueDate = formatDateToInput(tasks.find((task) => task.id === id)?.dueDate);
+        const formattedDueDate = formatDateToInput(task.dueDate);
         setDueDate(formattedDueDate);
 
         setTimeout(() => {
             const textarea = document.getElementById(`task-${id}`);
             if (textarea) {
-            textarea.focus();
-            // Set the selection range to the end of the text
-            textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+                textarea.focus();
+                textarea.setSelectionRange(textarea.value.length, textarea.value.length);
             }
         }, 0);
     };
-    
+
     const stopEditing = (id) => {
         setEditingTasks({
-          ...editingTasks,
-          [id]: false,
+            ...editingTasks,
+            [id]: false,
         });
-        setTaskError({ id: '', error: ''});
-        setDateError({ id: '', error: ''});
+        setTaskError({ id: '', error: '' });
+        setDateError({ id: '', error: '' });
     };
-    
+
     const handleEditFormSubmit = (e, id) => {
         e.preventDefault();
 
         const formattedDueDate = formatDateToDisplay(dueDate);
         const dueDateObj = new Date(formattedDueDate);
-    
+
         if (taskChanges[id].length === 0) {
             setTaskError({
                 ...taskError,
@@ -87,23 +82,21 @@ function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
                 id: id,
                 error: 'Task must be at most 125 characters long!',
             });
-        } else if (dueDateObj < new Date(new Date().setHours(0, 0, 0, 0))) {
+        } else if (dueDate && dueDateObj < new Date(new Date().setHours(0, 0, 0, 0))) {
             setDateError({
                 ...dateError,
                 id: id,
                 error: 'Due date cannot be in the past!',
             });
         } else {
-            setTaskError({ id: '', error: ''});
-
-            const formattedDate = new Date(dueDate).toLocaleDateString('en-US', { timeZone: 'Asia/Karachi' });
+            setTaskError({ id: '', error: '' });
 
             const updatedTask = {
                 id: id,
                 task: taskChanges[id],
-                dueDate: formattedDate,
+                dueDate: dueDate ? new Date(dueDate).toLocaleDateString('en-US', { timeZone: 'Asia/Karachi' }) : null,
                 status: status,
-            }
+            };
 
             onUpdateTask(id, updatedTask);
             stopEditing(id);
@@ -116,7 +109,7 @@ function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
-            })
+            });
         }
     };
 
@@ -142,7 +135,6 @@ function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
                             <label>Edit due date</label>
                             <input type="date" value={dueDate} onChange={handleDueDateChange} />
                             {dateError.id === task.id && <span className="error">{dateError.error}</span>}
-                        
                         </div>
                         <div className="footer">
                             <div>
@@ -156,11 +148,11 @@ function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
                                 >
                                     <FaTimes />
                                 </button>
-                                <button 
+                                <button
                                     title="Update"
-                                    className="success" 
+                                    className="success"
                                     type="submit"
-                                > 
+                                >
                                     <FaCheck />
                                 </button>
                             </div>
@@ -172,17 +164,17 @@ function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
                             <h3>
                                 <i onClick={() => onMarkTask(task.id)}>
                                     {
-                                        task.status === 'completed' ? 
-                                        <LiaToggleOnSolid style={{ color: 'green' }} size={24} /> 
-                                        : <LiaToggleOffSolid size={24} />
+                                        task.status === 'completed' ?
+                                            <LiaToggleOnSolid style={{ color: 'green' }} size={24} />
+                                            : <LiaToggleOffSolid size={24} />
                                     }
                                 </i>
-                                <span 
+                                <span
                                     style={{ textDecoration: task.status === 'completed' ? 'line-through' : 'none' }}
                                     title={
                                         task.status === 'completed'
-                                          ? 'Mark as pending'
-                                          : 'Mark as completed'
+                                            ? 'Mark as pending'
+                                            : 'Mark as completed'
                                     }
                                 >
                                     {task.task}
@@ -194,14 +186,14 @@ function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
                                 <h6>Due Date: {formatDateToDisplay(task.dueDate)}</h6>
                             </div>
                             <div>
-                                <button 
-                                    className="primary" 
+                                <button
+                                    className="primary"
                                     onClick={() => (setStatus(task.status), startEditing(task.id))}
                                 >
                                     <FaPen />
                                 </button>
-                                <button 
-                                    className="danger" 
+                                <button
+                                    className="danger"
                                     onClick={() => onDeleteTask(task.id, task.task)}
                                 >
                                     <FaTrash />
@@ -212,7 +204,7 @@ function EditTask({ task, tasks, onMarkTask, onDeleteTask, onUpdateTask }) {
                 )
             }
         </>
-    )
+    );
 }
 
 export default EditTask

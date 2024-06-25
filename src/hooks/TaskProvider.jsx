@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext, createContext } from 'react';
+import { useState, useEffect, useContext, createContext } from 'react'
+import useThreadStore from '../stores/useThreadStore'
 
 const TaskContext = createContext();
 
@@ -8,6 +9,19 @@ export const useTask = () => {
 
 export const TaskProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
+    const {
+        threads,
+        setThreads,
+        addThread,
+        addThreadItem,
+        addChildItem,
+        removeItem,
+        moveThreadToCompleted,
+        moveThreadToTodo,
+        markThreadItemAsDone,
+        unmarkThreadItemAsDone,
+        removeCompletedThread
+    } = useThreadStore();
 
     useEffect(() => {
         const storedTasks = JSON.parse(localStorage.getItem('tasks'));
@@ -17,50 +31,72 @@ export const TaskProvider = ({ children }) => {
     }, []);
 
     const addTask = (newTask) => {
-        const updatedTasks = [...tasks, newTask];
+        const updatedTasks = [...tasks, { ...newTask, timestamp: new Date().toISOString() }];
         setTasks(updatedTasks);
         localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-
-        console.log(updatedTasks);
     };
 
-    const markTask = (id) => {
+    const moveTaskToCompleted = (id) => {
         const updatedTasks = tasks.map(task => {
             if (task.id === id) {
-                return {
-                    ...task,
-                    status: task.status === 'pending' ? 'completed' : 'pending'
-                }
+                return { ...task, status: 'completed' };
             }
-            return task
-        })
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks))
-        setTasks(updatedTasks)
-    }
+            return task;
+        });
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    };
+
+    const moveTaskToTodo = (id) => {
+        const updatedTasks = tasks.map(task => {
+            if (task.id === id) {
+                return { ...task, status: 'to-do' };
+            }
+            return task;
+        });
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    };
 
     const deleteTask = (id) => {
-        const updatedTasks = tasks.filter(task => task.id !== id)
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks))
-        setTasks(updatedTasks)
-    }
+        const updatedTasks = tasks.filter(task => task.id !== id);
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    };
 
     const updateTask = (id, updatedTask) => {
-
         const updatedTasks = tasks.map(task => {
             if (task.id === id) {
                 return {
                     ...task,
                     ...updatedTask
-                }
+                };
             }
-            return task
-        })
-        localStorage.setItem('tasks', JSON.stringify(updatedTasks))
-        setTasks(updatedTasks)
-    }
+            return task;
+        });
+        setTasks(updatedTasks);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    };
 
     return (
-        <TaskContext.Provider value={{ tasks, addTask, markTask, deleteTask, updateTask }}>
+        <TaskContext.Provider value={{
+            tasks,
+            addTask,
+            moveTaskToCompleted,
+            moveTaskToTodo,
+            deleteTask,
+            updateTask,
+            threads,
+            addThread,
+            addThreadItem,
+            addChildItem,
+            removeItem,
+            moveThreadToCompleted,
+            moveThreadToTodo,
+            markThreadItemAsDone,
+            unmarkThreadItemAsDone,
+            removeCompletedThread
+        }}>
             {children}
         </TaskContext.Provider>
     );

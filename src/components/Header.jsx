@@ -21,8 +21,8 @@ const Header = () => {
                 to="/completed"
             >Completed</Link>
             <Link 
-                className={location.pathname === "/trash" ? "link active" : "link"} 
-                to="/trash"
+                className={location.pathname === "/expired" ? "link active" : "link"} 
+                to="/expired"
             >Expired</Link>
             <Link 
                 className={location.pathname === "/about" ? "link active" : "link"} 
