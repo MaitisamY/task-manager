@@ -5,12 +5,16 @@ import { TaskProvider } from './hooks/TaskProvider'
 import { ToastContainer } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
+import 'react-confirm-alert/src/react-confirm-alert.css'
 
 import Header from './components/Header'
-import Home from './components/Home'
-import Trash from './components/Trash'
+import Home from './pages/Home'
+import Pending from './pages/Pending'
+import Completed from './pages/Completed'
+import Trash from './pages/Trash'
+import About from './pages/About'
 
-function App() {
+const App = () => {
     return (
         <div className="app">
             <ToastContainer style={{ fontSize: '14px' }}  />
@@ -20,7 +24,10 @@ function App() {
                         <main>
                             <Routes>
                                 <Route path="/" element={<Home />} />
+                                <Route path="/pending" element={<Pending />} />
+                                <Route path="/completed" element={<Completed />} />
                                 <Route path="/trash" element={<Trash />} />
+                                <Route path="/about" element={<About />} />
                             </Routes>
                         </main>
                 </TaskProvider>

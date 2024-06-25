@@ -4,10 +4,7 @@ import { toast } from 'react-toastify'
 import { confirmAlert } from 'react-confirm-alert'
 import { formatDateToDisplay } from '../util/DateFormats'
 
-import 'react-toastify/dist/ReactToastify.css'
-import 'react-confirm-alert/src/react-confirm-alert.css'
-
-function Trash() {
+const Trash = () => {
 
     const { tasks, deleteTask } = useTask()
 
@@ -49,12 +46,10 @@ function Trash() {
     if (!filteredTasks || filteredTasks.length === 0) {
         return (
             <>
-                <div className="task-create-box">
-                    <div className="header">
-                        <h1>Trash</h1>
-                    </div>
+                <h1 className="page-heading">Trash</h1>
+                <div className="task-container" style={{ width: '97%', minWidth: '90%' }}>
                     <div className="content">
-                        <p>Your trash is empty</p>
+                        <h4>Your trash is empty</h4>
                     </div>
                 </div>
             </>
@@ -63,6 +58,7 @@ function Trash() {
 
     return (
         <>
+            <h1 className="page-heading">Trash</h1>
             {
                 filteredTasks.map(task => (
                     <div className="box" key={task.id}>

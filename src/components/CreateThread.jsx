@@ -7,7 +7,7 @@ import { formatDateToInput } from '../util/DateFormats'
 
 import 'react-toastify/dist/ReactToastify.css'
 
-const CreateTask = () => {
+const CreateThread = () => {
 
     const { addTask } = useTask();
 
@@ -118,39 +118,39 @@ const CreateTask = () => {
     return (
         <form onSubmit={handleCreateTask}>
             <div className="input-group">
-                <label htmlFor="task">Type Your Task</label>
-                <textarea
+                <label htmlFor="task">Thread Name</label>
+                <input
                     id="task"
                     type="text"
                     placeholder="E.g. Learn React"
                     value={task}
                     onChange={(e) => setTask(e.target.value)}
-                    rows={2}
-                ></textarea>
+                />
 
                 {errors.task && <span>{errors.task}</span>}
             </div>
             <div className="input-group">
-                <label htmlFor="dueDate">Set Due Date (optional)</label>
+                <label htmlFor="task">Item #1</label>
                 <input
-                    id="dueDate"
-                    type="date"
-                    value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
+                    id="task"
+                    type="text"
+                    placeholder="E.g. Learn React"
+                    value={task}
+                    onChange={(e) => setTask(e.target.value)}
                 />
 
-                {errors.dueDate && <span>{errors.dueDate}</span>}
+                {errors.task && <span>{errors.task}</span>}
             </div>
-            <p>Setting date in the past will move the task to expired.</p>
+            <a className="navigator">Add More Item</a>
             <button 
                 className="common-button" 
                 type="submit"
                 style={{ width: '100%' }}
             >
-                <FaPlus /> Add Task
+                <FaPlus /> Add Thread
             </button>
         </form>
     );
 };
 
-export default CreateTask;
+export default CreateThread;

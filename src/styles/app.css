@@ -1,18 +1,32 @@
-@keyframes slideDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-100px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@font-face {
+    font-family: "Playwrite";
+    src: url("../fonts/Playwrite_NG_Modern/PlaywriteNGModern-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Noto";
+    src: url("../fonts/Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf") format("truetype");
+}
+
+::-webkit-scrollbar {
+    display: block;
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Playwrite", sans-serif;
 }
 
 html {
@@ -46,22 +60,40 @@ body {
     font-size: calc(10px + 2vmin);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Playwrite', sans-serif;
+}
+
+a,
+button,
+label,
+input,
+select,
+textarea {
+    font-family: 'Noto', sans-serif;
+}
+
 .primary {
-    background-color: #302de6;
+    background-color: rgba(48, 45, 230, 0.9);
     color: white;
 }
 
 .primary:hover {
-    background-color: rgba(48, 45, 230, 0.9);
+    background-color: #302de6;
 }
 
 .danger {
-    background-color: #b60b0b;
+    background-color: rgb(182, 11, 11, 0.9);
     color: white;
 }
 
 .danger:hover {
-    background-color: rgb(182, 11, 11, 0.9);
+    background-color: #b60b0b;
 }
 
 .success {
@@ -82,38 +114,6 @@ body {
     background-color: rgb(255, 165, 0, 0.9);
 }
 
-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    width: 45%;
-    height: auto;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-header .link {
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 20px 20px;
-    transition: all 0.3s ease;
-}
-
-header .link.active {
-    background-color: black;
-    color: #d0cfcf;
-}
-
-@media screen and (max-width: 768px) {
-    header {
-        width: fit-content;
-        border-right: 1px solid rgba(0, 0, 0, 0.2);
-        border-left: 1px solid rgba(0, 0, 0, 0.2);
-    }
-}
-
 main {
     display: flex;
     flex-direction: row;
@@ -127,29 +127,178 @@ main {
     margin-top: 40px;
 }
 
+.page-heading {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    font-size: 2.5rem;
+    animation: fadeIn 2s ease;
+}
+
+.common-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 10px;
+    margin: 20px 0 0 0;
+    padding: 10px 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    outline: none;
+    background-color: rgba(48, 45, 230, 0.9);
+    color: white;
+}
+
+.common-button:hover { 
+    background-color: #302de6;
+    box-shadow: 0 0 0 4px #3e3eeb67;
+}
+
+.common-button.active {
+    color: #fff;
+    background-color: #302de6;
+    box-shadow: 0 0 0 6px #3e3eeb52, 0 0 0 12px #3e3eeb27;
+}
+
+.navigator {
+    position: relative;
+    margin: 10px 0 0 0;
+    padding: 0;
+    font-size: 15px;
+    text-align: left;
+    text-decoration: none;
+    color: rgba(59, 87, 211, 1);
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    font-family: var(--font-tilt-neon);
+}
+  
+.navigator::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: rgba(59, 87, 211, 1);
+    transition: width 0.3s ease;
+}
+  
+.navigator:hover::after {
+    width: 100%;
+}
+
+.selection {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    padding: 10px 15px;
+    overflow-x: auto; 
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.swipe-text {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    main {
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    main {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    main {
+        width: 80%;
+    }
+}
+
 @media screen and (max-width: 768px) {
     main {
         width: 100%;
         align-items: center;
         flex-direction: column;
     }
+
+    .page-heading {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .swipe-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+        width: fit-content;
+        height: 100%;
+        background-color: transparent;
+        pointer-events: none;
+        font-size: 12px;
+    }
 }
 
-.task-create-box {
+.task-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
     gap: 0;
-    width: 97%;
-    height: fit-content;
-    min-width: 90%;
     border-radius: 10px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(0, 0, 0, 0.2);
     animation: slideDown 0.5s ease forwards;
     padding: 0;
     margin: 0;
+}
+
+.height-controller {
+    min-height: 50vh;
+    max-height: 50vh;
+}
+
+@media screen and (max-width: 768px) {
+    .selection {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 570px) {
+    .selection {
+        width: 85%;
+    }
+
+    .height-controller {
+        min-height: 100%;
+        max-height: 100%;
+    }
 }
 
 .box {
@@ -176,15 +325,18 @@ main {
         min-width: 90%;
         max-width: 90%;
     }
-    .task-create-box {
+    .task-container {
         width: 90%;
         min-width: 90%;
     }
 }
 
-.task-create-box .header,
+.task-container .header,
 .box .header {
-    position: relative;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -195,13 +347,21 @@ main {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.task-create-box .header h1,
-.box .header h1 {
-    font-size: 30px;
+.task-container .header h2,
+.box .header h2 {
+    font-size: 1.3rem;
     font-weight: bold;
 }
 
-.task-create-box .content {
+@media screen and (max-width: 570px) {
+    .task-container .header h2,
+    .box .header h2 {
+        font-size: 1.2rem;
+    }
+}
+
+.task-container .content {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -212,18 +372,28 @@ main {
     text-align: center;
     padding: 20px 30px 20px 30px;
     margin: 0;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: 6px;
 }
 
-.task-create-box .content .selection {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    padding: 10px 20px;
+.task-container .content::-webkit-scrollbar {
+    display: block;
+    width: 6px;
 }
 
-.task-create-box .content .selector {
+.task-container .content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+}
+
+.task-container .content::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.task-container .content .selector {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -232,8 +402,6 @@ main {
     font-size: 16px;
     font-weight: 500;
     width: fit-content;
-    color: #fff;
-    background-color: #2d29ee;
     border-radius: 10px;
     margin: 0;
     padding: 10px 20px;
@@ -242,19 +410,17 @@ main {
     transition: all 0.3s ease;
 }
 
-.task-create-box .content .selector:hover { 
-    background-color: #3e3eeb;
+.task-container .content .selector:hover { 
     box-shadow: 0 0 0 4px #3e3eeb67;
 }
 
-.task-create-box .content .selector.active {
-    background-color: #3e3eeb;
+.task-container .content .selector.active {
     box-shadow: 0 0 0 4px #3e3eeb52, 0 0 0 8px #3e3eeb27;
 }
 
-.task-create-box .content form {
+.task-container .content form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     gap: 10px;
@@ -262,25 +428,25 @@ main {
     padding: 0;
 }
 
-.task-create-box .content form .input-group {
+.task-container .content form .input-group {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    gap: 0;
+    gap: 5px;
     width: 100%;
     padding: 0;
 }
 
-.task-create-box .content form .input-group label {
-    font-size: 14px;
+.task-container .content form .input-group label {
+    font-size: 15px;
     font-weight: 500;
     color: black;
     margin: 0;
     padding: 5px 0;
 }
 
-.task-create-box .content form input {
+.task-container .content form input {
     width: 100%;
     font-size: 18px;
     padding: 5px 5px;
@@ -290,10 +456,9 @@ main {
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
     margin: 0;
     background-color: transparent;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.task-create-box .content form textarea {
+.task-container .content form textarea {
     width: 100%;
     font-size: 18px;
     padding: 5px 5px;
@@ -303,28 +468,7 @@ main {
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
     margin: 0;
     background-color: transparent;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.task-create-box .content form button {
-    width: auto;
-    font-size: 18px;
-    margin: 30px 0 0 0;
-    padding: 8px 7px 4px 7px;
-    border-radius: 10px;
-    border: none;
-    outline: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.05);
-    transition: all 0.2s ease;
-}
-
-@media screen and (max-width: 768px) {
-    .task-create-box .content form button {
-        width: 100%;
-        margin: 20px 0 0 0;
-    }
+    resize: none;
 }
 
 .box .content {
@@ -340,7 +484,7 @@ main {
     margin: 0;
 }
 
-.task-create-box .content h3,
+.task-container .content h3,
 .box .content h3 {
     display: flex;
     align-items: center;
@@ -351,7 +495,7 @@ main {
     margin: 0;
 }
 
-.task-create-box .content h3 span,
+.task-container .content h3 span,
 .box .content h3 span {
     font-size: 16px;
     font-weight: 500;
@@ -359,7 +503,7 @@ main {
     margin: 0;
 }
 
-.task-create-box .content h3 i,
+.task-container .content h3 i,
 .box .content h3 i {
     font-size: 20px;
     cursor: pointer;
@@ -367,16 +511,79 @@ main {
     margin-top: 6px;
 }
 
-.task-create-box .content p,
-.box .content p {
-    font-size: 21px;
+.task-container .content h4,
+.box .content h4 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
 }
 
-.task-create-box .content span,
+.task-container .content h5,
+.box .content h5 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+}
+
+.task-container .content h6,
+.box .content h6 {
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+    font-family: "Noto", sans-serif;
+}
+
+.task-container .content ul,
+.box .content ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    width: 90%;
+    padding: 0 0 0 20px;
+    margin: 10px 0 0 20px;
+}
+
+.task-container .content ul li,
+.box .content ul li {
+    padding: 0;
+    margin: 0;
+    font-family: "Noto", sans-serif;
+    font-weight: 400;
+    font-size: 19px;
+    color: black;
+    text-align: left;
+}
+
+.task-container .content ul li .outer-link,
+.box .content ul li .outer-link {
+    color: #302de6;
+    padding: 5px 10px;
+}
+
+.task-container .content p,
+.box .content p {
+    font-size: 12px;
+    font-family: "Noto", sans-serif;
+}
+
+.task-container .content span,
 .box .content span {
     font-size: 13px;
     color: rgb(173, 13, 13);
     margin-top: 5px;
+    font-family: "Noto", sans-serif;
 }
 
 .box .content form {
@@ -399,7 +606,7 @@ main {
     padding: 0;
 }
 
-.task-create-box .content label,
+.task-container .content label,
 .box .content label {
     font-size: 18px;
     font-weight: 500;
@@ -417,7 +624,6 @@ main {
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
     margin: 0;
     background-color: transparent;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .box .content textarea {
@@ -430,48 +636,28 @@ main {
     box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
     margin: 0;
     background-color: transparent;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.task-create-box .content input::placeholder,
-.task-create-box .content textarea::placeholder,
+.task-container .content input::placeholder,
+.task-container .content textarea::placeholder,
 .box .content input::placeholder,
 .box .content textarea::placeholder {
     color: rgba(0, 0, 0, 0.5);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.task-create-box .content input:focus,
-.task-create-box .content input:active,
-.task-create-box .content textarea:focus,
-.task-create-box .content textarea:active,
+.task-container .content input:focus,
+.task-container .content input:active,
+.task-container .content textarea:focus,
+.task-container .content textarea:active,
 .box .content input:focus,
 .box .content input:active,
 .box .content textarea:focus,
 .box .content textarea:active {
-    outline: 1px solid black;
-}
-
-.box .content button {
-    width: 100%;
-    font-size: 18px;
-    padding: 5px 5px;
-    border-radius: 10px;
-    border: none;
     outline: 1px solid rgba(0, 0, 0, 0.2);
-    box-shadow: 0 0 10px -2px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    background-color: rgba(0, 0, 0, 0.05);
-    margin-top: 20px;
-    transition: all 0.2s ease;
+    box-shadow: 0 0 0 6px #3e3eeb2f, 0 0 0 12px #3e3eeb15;
 }
 
-.task-create-box .content button:hover,
-.box .content button:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.task-create-box .footer,
+.task-container .footer,
 .box .footer {
     position: relative;
     display: flex;
@@ -483,13 +669,13 @@ main {
     border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.task-create-box .footer h6,
+.task-container .footer h6,
 .box .footer h6 {
     font-size: 11px;
     font-weight: 700;
 }
 
-.task-create-box .footer div,
+.task-container .footer div,
 .box .footer div {
     display: flex;
     align-items: center;
@@ -497,7 +683,7 @@ main {
     gap: 10px;
 }
 
-.task-create-box .footer button,
+.task-container .footer button,
 .box .footer button {
     font-size: 14px;
     padding: 10px 10px 7px 10px;
@@ -510,7 +696,7 @@ main {
 }
 
 @media screen and (max-width: 768px) {
-    .task-create-box .content form {
+    .task-container .content form {
         display: flex;
         flex-direction: column;
         align-items: center;
